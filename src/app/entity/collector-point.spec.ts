@@ -1,7 +1,10 @@
-import { CollectorPoint } from './collector-point';
+import {
+	CollectorPoint,
+	CollectorPointProps
+} from './collector-point';
 
 describe('Collector Point', () => {
-	it('should be able to create new collector point', () => {
+	it('should be able to create a Collector Point', () => {
 		const collector = new CollectorPoint({
 			name: 'Salompas',
 			whatsapp: 19393818999,
@@ -14,5 +17,11 @@ describe('Collector Point', () => {
 		})
 
 		expect(collector).toBeTruthy()
+	})
+
+	it('should not be able to create a Collector Point', () => {
+		expect(
+			() => new CollectorPoint({} as CollectorPointProps)
+		).toThrow()
 	})
 })

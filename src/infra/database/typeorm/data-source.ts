@@ -4,7 +4,7 @@ import { CollectorPoint } from './entity/point'
 
 export const AppDataSource = new DataSource({
 	type: 'better-sqlite3',
-  database: __dirname + '/database/db.sqlite',
+  database: __dirname + '/db.sqlite',
 	synchronize: false,
   logging: false,
 	entities: [CollectorPoint],

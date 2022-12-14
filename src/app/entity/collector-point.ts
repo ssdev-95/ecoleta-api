@@ -1,3 +1,5 @@
+import { randomUUID } from 'crypto';
+
 export interface CollectorPointProps {
 	name: string
 	email: string
@@ -10,19 +12,51 @@ export interface CollectorPointProps {
 }
 
 export class CollectorPoint {
-	private props:CollectorPointProps
+	private _id:string
+	private props: CollectorPointProps
 
-	constructor (props:CollectorPointProps) {
-		const isValidProps = Object.values(props)
-
-		if(!isValidProps.length) {
-			throw new Error('Invalid or incomplete collector point infos provided')
+	constructor(props:CollectorPointProps) {
+		if(!props || !Object.values(props).length) {
+			throw new Error('Invalid data/values provided')
 		}
 
+		this._id = randomUUID()
 		this.props = props
 	}
 
-	get value() {
-		return this.props
+	public get id() {
+		return this._id
+	}
+
+	public get name() {
+		return this.props.name
+	}
+
+	public get email() {
+		return this.props.email
+	}
+
+	public get whatsapp() {
+		return this.props.whatsapp
+	}
+
+	public get city() {
+		return this.props.city
+	}
+
+	public get street() {
+		return this.props.street
+	}
+
+	public get uf() {
+		return this.props.uf
+	}
+
+	public get coords() {
+		return this.props.coords
+	}
+
+	public get picture() {
+		return this.props.picture
 	}
 }
