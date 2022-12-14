@@ -3,10 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 
 import { CollectorPoint } from '../infra/entity/point';
-
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { TypeORMService } from './typeorm/typeorm.service';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -19,8 +16,10 @@ import { TypeORMService } from './typeorm/typeorm.service';
 		subscribers: []
 	}), TypeOrmModule.forFeature([CollectorPoint])],
   controllers: [AppController],
-  providers: [TypeOrmModule, TypeORMService, AppService],
+  providers: [TypeOrmModule],
 })
 export class AppModule {
-  constructor(private dataSource: DataSource) {}
+  constructor(private dataSource: DataSource) {
+		this.dataSource.initialize()
+	}
 }
