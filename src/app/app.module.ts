@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { HTTPModule } from '../infra/http/http.module';
+import { HTTPModule } from '@infra/http/http.module';
 
 import {
 	DatabaseModule

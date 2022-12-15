@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
-//import { DataSource } from 'typeorm';
 
-import { DatabaseModule } from '../database/database.module';
+import {
+	DatabaseModule
+} from '../database/database.module';
 
 import {
 	AppController
@@ -9,19 +10,19 @@ import {
 
 import {
 	CollectorPointRegister
-} from '../../app/use-case/registrate-collector-point';
+} from '@application/use-case/registrate-collector-point';
 
 import {
 	CollectorPointsRepository
-} from '../../app/repositories/collector-points-repository';
+} from '@application/repositories/collector-points-repository';
 
 import {
 	TypeormCollectorPointsRepository
 } from '../database/typeorm/repository/typeorm-collector-points-repository';
 
 import {
-	AppDataSource
-} from '../database/typeorm/data-source';
+	CollectorPointRetriever
+} from '@application/use-case/retrieve-collector-points';
 
 @Module({
 	imports: [DatabaseModule],
@@ -30,7 +31,8 @@ import {
 			provide:  CollectorPointsRepository,
 			useClass: TypeormCollectorPointsRepository
 		},
-		CollectorPointRegister
+		CollectorPointRegister,
+		CollectorPointRetriever
 	],
 	controllers: [AppController]
 })

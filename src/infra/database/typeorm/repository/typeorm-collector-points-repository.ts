@@ -6,13 +6,17 @@ import {
 
 import {
 	CollectorPoint
-} from '../../../../app/entity/collector-point';
+} from '@application/entity/collector-point';
 
 import { TypeormService } from '../typeorm.service';
 
 import {
 	CollectorPointsRepository
-} from '../../../../app/repositories/collector-points-repository';
+} from '@application/repositories/collector-points-repository';
+
+import {
+	CollectorPointMapper
+} from '../mappers/typeorm-collector-point-mapper'
 
 @Injectable()
 export class TypeormCollectorPointsRepository implements CollectorPointsRepository {
@@ -21,10 +25,46 @@ export class TypeormCollectorPointsRepository implements CollectorPointsReposito
 	) {}
 
 	async create(collectorPoint: CollectorPoint) {
-		console.log(this
+		const raw = CollectorPointMapper
+		  .toTypeORM(collectorPoint)
+
+		await this
 		  .typeormService
 			.dataSource
 			.getRepository(CollectorPointEntity)
-			.create(collectorPoint))
+			.create(raw)
+			.save()
   }
+
+	async findManyByCity(city: string) {
+		const rawResponse = await this
+		  .typeormService
+			.dataSource
+			.getRepository(CollectorPointEntity)
+			.find({
+				where: {
+					city
+				}
+			})
+
+		const collectors = rawResponse
+		  .map(CollectorPointMapper.toDomain)
+
+		return collectors
+	}
+
+	async findById(id: string) {
+		const rawResponse = await this
+		  .typeormService
+			.dataSource
+			.getRepository(CollectorPointEntity)
+			.findOneOrFail({
+				where: { id	}
+			})
+
+		const collector = CollectorPointMapper
+		  .toDomain(rawResponse)
+
+		return collector
+	}
 }

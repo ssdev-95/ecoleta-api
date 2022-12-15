@@ -1,20 +1,17 @@
 import {
+	makeCollectorPoint
+} from '@test/factories/collector-point-factory';
+
+import {
 	CollectorPoint,
 	CollectorPointProps
 } from './collector-point';
 
 describe('Collector Point', () => {
 	it('should be able to create a Collector Point', () => {
-		const collector = new CollectorPoint({
-			name: 'Salompas',
-			whatsapp: 19393818999,
-			email: 'jwjefidjwkqw9ss',
-			picture: 'hwf7wh2id8fdn',
-			street: 8,
-			city: '2f7dhws',
-			uf: 'MA',
-			coords: 'nsu2nt8fidje'
-		})
+		const collector = new CollectorPoint(
+			makeCollectorPoint()
+		)
 
 		expect(collector).toBeTruthy()
 	})

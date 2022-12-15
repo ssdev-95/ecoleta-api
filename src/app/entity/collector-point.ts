@@ -15,12 +15,12 @@ export class CollectorPoint {
 	private _id:string
 	private props: CollectorPointProps
 
-	constructor(props:CollectorPointProps) {
+	constructor(props:CollectorPointProps, id?:string) {
 		if(!props || !Object.values(props).length) {
 			throw new Error('Invalid data/values provided')
 		}
 
-		this._id = randomUUID()
+		this._id = id ?? randomUUID()
 		this.props = props
 	}
 

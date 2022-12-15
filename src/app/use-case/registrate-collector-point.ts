@@ -5,7 +5,7 @@ import {
 	CollectorPointsRepository
 } from '../repositories/collector-points-repository';
 
-interface RegistryCollectorProps {
+export interface RegistryCollectorProps {
 	name: string
 	email: string
 	whatsapp: number

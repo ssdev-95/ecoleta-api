@@ -1,10 +1,10 @@
 import {
 	CollectorPoint
-} from '../../src/app/entity/collector-point';
+} from '@application/entity/collector-point';
 
 import {
 	CollectorPointsRepository
-} from '../../src/app/repositories/collector-points-repository';
+} from '@application/repositories/collector-points-repository';
 
 export class InMemmoryCollectorPointsRepository
   implements CollectorPointsRepository
@@ -13,5 +13,21 @@ export class InMemmoryCollectorPointsRepository
 
 	async create(collector: CollectorPoint) {
 		this.collectors.push(collector)
+	}
+
+	async findManyByCity(city: string): Promise<CollectorPoint[]> {
+		return this.collectors.filter(point => point.city === city)
+	}
+
+	async findById(id: string){
+		const collector = this
+		  .collectors
+			.find((item)=>item.id === id)
+
+		if(!collector) {
+			throw Error('Cant\'t find collector point for given id')
+		}
+
+		return collector
 	}
 }

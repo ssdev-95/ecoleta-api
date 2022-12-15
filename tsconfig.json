@@ -11,6 +11,15 @@
       "outDir": "./build",
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
-      "sourceMap": true
+      "sourceMap": true,
+			"resolveJsonModule": true,
+			"strict": true,
+			"strictNullChecks": true,
+			"strictPropertyInitialization": false,
+			"paths": {
+				"@application/*": ["./src/app/*"],
+				"@infra/*": ["./src/infra/*"],
+				"@test/*": ["./test/*"]
+			}
    }
 }

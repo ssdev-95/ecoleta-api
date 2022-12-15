@@ -4,7 +4,11 @@ import {
 
 import {
 	InMemmoryCollectorPointsRepository
-} from '../../../test/repositories/in-memory-collector-points-repository';
+} from '@test/repositories/in-memory-collector-points-repository';
+
+import {
+	makeCollectorPoint
+} from '@test/factories/collector-point-factory';
 
 describe('Register Collector Point', () => {
 	const collectorPointsRepository = new InMemmoryCollectorPointsRepository()
@@ -15,16 +19,7 @@ describe('Register Collector Point', () => {
 		)
 	
 		const { collectorPoint } = await collectorPointRegister
-		  .register({
-				name: 'Salompas',
-				whatsapp: 19393818999,
-				email: 'jwjefidjwkqw9ss',
-				picture: 'hwf7wh2id8fdn',
-				street: 8,
-				city: '2f7dhws',
-				uf: 'MA',
-				coords: 'nsu2nt8fidje'
-			})
+		  .register(makeCollectorPoint())
 
 		expect(
 			collectorPointsRepository.collectors
