@@ -1,3 +1,5 @@
+import { Injectable } from '@nestjs/common';
+
 import {
 	CollectorPoint as CollectorPointEntity
 } from '../entity/point';
@@ -12,6 +14,7 @@ import {
 	CollectorPointsRepository
 } from '../../../../app/repositories/collector-points-repository';
 
+@Injectable()
 export class TypeormCollectorPointsRepository implements CollectorPointsRepository {
 	constructor(
 		private typeormService: TypeormService

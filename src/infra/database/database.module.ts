@@ -18,6 +18,7 @@ import { CollectorPoint } from './typeorm/entity/point';
 		TypeOrmModule.forFeature([CollectorPoint]),
 		TypeOrmModule
 	],
-	providers: [TypeormService]
+	providers: [TypeormService],
+	exports: [TypeormService]
 })
 export class DatabaseModule {}
