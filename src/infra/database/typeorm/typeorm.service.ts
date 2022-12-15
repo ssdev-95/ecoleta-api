@@ -7,6 +7,10 @@ import { AppDataSource } from './data-source';
 export class TypeormService {
 	private _dataSource:DataSource = AppDataSource
 
+	constructor() {
+		this._dataSource.initialize()
+	}
+
 	public get dataSource() {
 		return this._dataSource
 	}
