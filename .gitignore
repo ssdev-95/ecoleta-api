@@ -6,3 +6,4 @@ tmp/
 temp/
 
 src/**/db.sqlite
+.env

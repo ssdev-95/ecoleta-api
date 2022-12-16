@@ -17,8 +17,7 @@ export class CreateCollectorPointBody {
 	whatsapp: number
 
 	@IsNotEmpty()
-	@IsNumber()
-	street: number
+	street: string
 	
 	@IsNotEmpty()
 	city: string

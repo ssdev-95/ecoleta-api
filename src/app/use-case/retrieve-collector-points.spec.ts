@@ -1,8 +1,4 @@
 import {
-	CollectorPointsRepository
-} from '@application/repositories/collector-points-repository';
-
-import {
 	makeCollectorPoint
 } from '@test/factories/collector-point-factory';
 
@@ -19,23 +15,20 @@ import {
 } from './retrieve-collector-points';
 
 describe('Collector Points Retriever', () => {
-	let repository: CollectorPointsRepository|undefined
-
-	beforeAll(async () => {
-		repository = new InMemmoryCollectorPointsRepository()
+	it('should be able to get a collector point by city', async () => {
+		 const repository = new InMemmoryCollectorPointsRepository()
 		const register = new CollectorPointRegister(repository!)
+		const retriever = new CollectorPointRetriever(repository)
 
-		await register.register(makeCollectorPoint())
-	})
-
-	it('should be able to get all collector points', async () => {
-		const retriever = new CollectorPointRetriever(repository!)
+		await register.register(makeCollectorPoint({
+			city: 'Nimbasa'
+		}))
 
 		const rawResponse = await retriever.findManyByCity('Nimbasa')
-		expect(rawResponse).toHaveLength(1)
-	})
-
-	afterAll(() => {
-		repository = undefined
+		expect(rawResponse).toContain([
+			expect.objectContaining({
+				props: { city: 'Nimbasa' }
+			})
+		])
 	})
 })

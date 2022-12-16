@@ -20,9 +20,15 @@ export class AppController {
 		private createCollectorPoint:CollectorPointRegister,
 		private retrieveCollectorPoint:CollectorPointRetriever
 	) { }
+
   @Get('list/:city')
-  list(@Param('city') city:string) {
+  getManyByCity(@Param('city') city:string) {
     return this.retrieveCollectorPoint.findManyByCity(city)
+	}
+
+	@Get(':id')
+	getById(@Param('id') id:string) {
+		return this.retrieveCollectorPoint.findById(id)
 	}
 
 	@Post('new')

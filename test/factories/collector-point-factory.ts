@@ -10,7 +10,7 @@ export function makeCollectorPoint(override:Override = {}) {
 		whatsapp: 19393818999,
 		email: 'jwjefidjwkqw9ss',
 		picture: 'hwf7wh2id8fdn',
-		street: 8,
+		street: 'salame',
 		city: '2f7dhws',
 		uf: 'MA',
 		coords: 'nsu2nt8fidje',

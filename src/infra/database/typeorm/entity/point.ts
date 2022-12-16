@@ -5,7 +5,7 @@ import {
 	PrimaryGeneratedColumn
 } from 'typeorm';
 
-@Entity('points')
+@Entity({ name:'points', schema:'public'  })
 export class CollectorPoint extends BaseEntity {
 	@PrimaryGeneratedColumn('uuid')
 	id: string
@@ -20,7 +20,7 @@ export class CollectorPoint extends BaseEntity {
 	whatsapp: number
 
 	@Column()
-	street: number
+	street: string
 
 	@Column()
 	city: string

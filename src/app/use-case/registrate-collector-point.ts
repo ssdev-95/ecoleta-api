@@ -9,7 +9,7 @@ export interface RegistryCollectorProps {
 	name: string
 	email: string
 	whatsapp: number
-	street: number
+	street: string
 	city: string
 	uf: string
 	coords: string

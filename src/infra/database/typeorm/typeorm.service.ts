@@ -1,17 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { DataSource } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 
 import { AppDataSource } from './data-source';
+import {CollectorPoint} from './entity/point';
 
 @Injectable()
-export class TypeormService {
-	private _dataSource:DataSource = AppDataSource
-
+export class TypeormService extends Repository<CollectorPoint> {
 	constructor() {
-		this._dataSource.initialize()
-	}
+		super(CollectorPoint, new EntityManager(AppDataSource))
 
-	public get dataSource() {
-		return this._dataSource
+		AppDataSource.initialize().then(() => {
+			console.info('[INFO] Database routines initialized.')
+		})
 	}
 }
