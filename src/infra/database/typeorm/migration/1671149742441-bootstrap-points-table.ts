@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner } from "typeorm";
+import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class bootstrapPointsTable1671149742441 implements MigrationInterface {
     name = 'bootstrapPointsTable1671149742441'

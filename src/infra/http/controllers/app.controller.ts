@@ -21,6 +21,11 @@ export class AppController {
 		private retrieveCollectorPoint:CollectorPointRetriever
 	) { }
 
+	@Get('Hello')
+	getHello() {
+		return 'Hello World'
+	}
+
   @Get('list/:city')
   getManyByCity(@Param('city') city:string) {
     return this.retrieveCollectorPoint.findManyByCity(city)

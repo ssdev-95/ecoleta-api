@@ -24,11 +24,9 @@ describe('Collector Points Retriever', () => {
 			city: 'Nimbasa'
 		}))
 
-		const rawResponse = await retriever.findManyByCity('Nimbasa')
-		expect(rawResponse).toContain([
-			expect.objectContaining({
-				props: { city: 'Nimbasa' }
-			})
-		])
+		const rawResponse = await retriever
+		  .findManyByCity('Nimbasa')
+	
+		expect(rawResponse).toHaveLength(1)
 	})
 })

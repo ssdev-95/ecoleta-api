@@ -5,5 +5,5 @@ build/
 tmp/
 temp/
 
-src/**/db.sqlite
+src/**/db.sqlite*
 .env
