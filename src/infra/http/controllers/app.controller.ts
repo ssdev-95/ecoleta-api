@@ -14,6 +14,10 @@ import {
 	CollectorPointRetriever
 } from '@application/use-case/retrieve-collector-points';
 
+import {
+	CollectorPointMapper
+} from '@infra/database/typeorm/mappers/typeorm-collector-point-mapper';
+
 @Controller('points')
 export class AppController {
 	constructor(
@@ -27,13 +31,21 @@ export class AppController {
 	}
 
   @Get('list/:city')
-  getManyByCity(@Param('city') city:string) {
-    return this.retrieveCollectorPoint.findManyByCity(city)
+  async getManyByCity(@Param('city') city:string) {
+    const collectors = await this
+		  .retrieveCollectorPoint
+			.findManyByCity(city)
+
+		return collectors.map(CollectorPointMapper.toTypeORM)
 	}
 
 	@Get(':id')
-	getById(@Param('id') id:string) {
-		return this.retrieveCollectorPoint.findById(id)
+	async getById(@Param('id') id:string) {
+		const collector = await this
+		  .retrieveCollectorPoint
+			.findById(id)
+
+		return CollectorPointMapper.toTypeORM(collector)
 	}
 
 	@Post('new')
