@@ -1,15 +1,17 @@
-import {
-	CollectorImage
-} from '@application/entity/collector-image';
+import { Injectable } from '@nestjs/common';
 
 import {
 	CollectorImageRespository
 } from '@application/repositories/collector-image-repository';
+import {
+	CollectorImage
+} from '@application/entity/collector-image';
 
+@Injectable()
 export class UploadImage {
 	constructor(private imageRepository: CollectorImageRespository) {}
 
-	async upload(collectorImage:CollectorImage) {
-		return await this.imageRepository.upload(collectorImage)
+	upload(collectorImage:CollectorImage) {
+		return this.imageRepository.upload(collectorImage)
 	}
 }

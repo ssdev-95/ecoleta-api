@@ -2,8 +2,11 @@ import { IsNotEmpty } from 'class-validator';
 
 export class UploadImageBody {
 	@IsNotEmpty()
+	image: string
+	
+	@IsNotEmpty()
 	name: string
 
 	@IsNotEmpty()
-	image: string
+	type: string
 }

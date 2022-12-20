@@ -7,8 +7,8 @@ import {
 
 @Module({
   imports: [
-		HTTPModule,
-		DatabaseModule
+		DatabaseModule,
+		HTTPModule
 	]
 })
 export class AppModule {

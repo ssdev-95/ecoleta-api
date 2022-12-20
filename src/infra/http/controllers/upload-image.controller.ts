@@ -18,11 +18,14 @@ export class UploadImageController {
 
 	@Post('upload')
 	async uploadImage(@Body() body: UploadImageBody) {
-		const image = new CollectorImage({
-			name: body.name,
-			image: body.image
+		const { name:imageName, image, type:imageType } = body
+
+		const imageInstance = new CollectorImage({
+			image,
+			type: imageType,
+			name: imageName
 		})
 
-		return await this.imageUploader.upload(image)
+		return await this.imageUploader.upload(imageInstance)
 	}
 }

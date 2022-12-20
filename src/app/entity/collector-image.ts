@@ -1,6 +1,7 @@
 export interface CollectorImageProps {
-	name: string
 	image: string
+	type: string
+	name:string
 }
 
 export class CollectorImage {
@@ -11,11 +12,15 @@ export class CollectorImage {
 		this.props = props
 	}
 
-	public get name() {
-		return this.props.name
-	}
-
 	public get image() {
 		return this.props.image
+	}
+
+	public get type() {
+		return this.props.type
+	}
+
+	public get name() {
+		return this.props.name
 	}
 }

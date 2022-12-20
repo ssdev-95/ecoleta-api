@@ -4,8 +4,13 @@ import { firebaseConfig } from './config';
 
 import {
 	ref,
+	StorageReference,
 	getStorage,
-	uploadString
+	uploadString,
+	uploadBytes,
+	getDownloadURL,
+	FirebaseStorage,
+	StringFormat
 } from 'firebase/storage';
 
 import {
@@ -14,18 +19,35 @@ import {
 
 @Injectable()
 export class FirebaseService {
+	private storage:FirebaseStorage|undefined
+
 	constructor() {
 		initializeApp(firebaseConfig)
+		this.storage = getStorage()
 	}
 
 	async upload(collectorImage:CollectorImage) {
-		const storage = getStorage()
-		const imageRef = ref(storage, collectorImage.name)
+		const name = `${Date.now()}-${collectorImage.name}`
+		const imageRef = ref(this.storage!, name)
 
-		const uploadResult = await uploadString(
+		await this.uploadWithBase64(
 			imageRef,
-			collectorImage.image
+			collectorImage.image,
+			collectorImage.type
 		)
-		return uploadResult.ref.toString()
+
+		return getDownloadURL(imageRef)
+	}
+
+	uploadWithBlob(ref: StorageReference, image:Blob) {
+		return uploadBytes(ref,image)
+	}
+
+	uploadWithBase64(
+		ref:StorageReference,
+		image:string,
+		type: string
+	) {
+		return uploadString(ref, image, type as StringFormat)
 	}
 }

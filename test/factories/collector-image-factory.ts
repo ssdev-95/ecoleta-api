@@ -6,8 +6,9 @@ type Override = Partial<CollectorImageProps>
 
 export function makeCollectorImage(override:Override={}) {
 	return {
-		name: 'image_boladona',
-		image: 'image_boladona.png',
+		name: 'test.png',
+		image: 'test_boladaun.png',
+		type: 'base64',
 		...override
 	}
 }
