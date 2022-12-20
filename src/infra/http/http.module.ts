@@ -9,6 +9,10 @@ import {
 } from './controllers/app.controller';
 
 import {
+	UploadImageController
+} from './controllers/upload-image.controller';
+
+import {
 	CollectorPointRegister
 } from '@application/use-case/registrate-collector-point';
 
@@ -23,6 +27,9 @@ import {
 import {
 	CollectorPointRetriever
 } from '@application/use-case/retrieve-collector-points';
+import {
+	UploadImage
+} from '@application/use-case/upload-collector-image';
 
 @Module({
 	imports: [DatabaseModule],
@@ -32,9 +39,10 @@ import {
 			useClass: TypeormCollectorPointsRepository
 		},
 		CollectorPointRegister,
-		CollectorPointRetriever
+		CollectorPointRetriever,
+		UploadImage
 	],
-	controllers: [AppController]
+	controllers: [AppController, UploadImageController]
 })
 export class HTTPModule {
 }

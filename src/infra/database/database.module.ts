@@ -5,6 +5,10 @@ import {
 	options as DataSourceOptions
 } from './typeorm/data-source';
 
+import {
+	FirebaseService
+} from './firebase/firebase.service';
+
 import { TypeormService } from './typeorm/typeorm.service';
 import { CollectorPoint } from './typeorm/entity/point';
 
@@ -13,7 +17,7 @@ import { CollectorPoint } from './typeorm/entity/point';
 		TypeOrmModule.forRoot(DataSourceOptions),
 		TypeOrmModule.forFeature([CollectorPoint])
 	],
-	providers: [TypeormService],
-	exports: [TypeormService]
+	providers: [TypeormService, FirebaseService],
+	exports: [TypeormService, FirebaseService]
 })
 export class DatabaseModule {}

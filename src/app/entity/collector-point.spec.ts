@@ -2,10 +2,7 @@ import {
 	makeCollectorPoint
 } from '@test/factories/collector-point-factory';
 
-import {
-	CollectorPoint,
-	CollectorPointProps
-} from './collector-point';
+import { CollectorPoint } from './collector-point';
 
 describe('Collector Point', () => {
 	it('should be able to create a Collector Point', () => {
@@ -18,7 +15,7 @@ describe('Collector Point', () => {
 
 	it('should not be able to create a Collector Point', () => {
 		expect(
-			() => new CollectorPoint({} as CollectorPointProps)
+			() => new CollectorPoint()
 		).toThrow()
 	})
 })

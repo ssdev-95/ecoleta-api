@@ -15,7 +15,7 @@ export class CollectorPoint {
 	private _id:string
 	private props: CollectorPointProps
 
-	constructor(props:CollectorPointProps, id?:string) {
+	constructor(props?:CollectorPointProps, id?:string) {
 		if(!props || !Object.values(props).length) {
 			throw new Error('Invalid data/values provided')
 		}
