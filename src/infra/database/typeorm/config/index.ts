@@ -20,11 +20,11 @@ const baseConfig = {
 
 export const prodConfig:DataSourceOptions = {
 	type: 'mysql',
-	host: 'config.host',
-	port: 3307,
-	username: 'config.username',
-	password: 'config.password',
-	database: 'config.database',
+	host: process.env.DB_HOST,
+	port: parseInt(process.env.DB_PORT ?? '3306'),
+	username: process.env.DB_USERNAME,
+	password: process.env.DB_PASSWORD,
+	database: process.env.DB_NAME,
 	...baseConfig
 }
 
