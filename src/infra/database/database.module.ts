@@ -1,9 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
-import {
-	options as DataSourceOptions
-} from './typeorm/data-source';
+import { options } from './typeorm/data-source';
 
 import {
 	FirebaseService
@@ -14,7 +11,7 @@ import { CollectorPoint } from './typeorm/entity/point';
 
 @Module({
 	imports: [
-		TypeOrmModule.forRoot(DataSourceOptions),
+		TypeOrmModule.forRoot(options),
 		TypeOrmModule.forFeature([CollectorPoint])
 	],
 	providers: [TypeormService, FirebaseService],
