@@ -33,4 +33,7 @@ export class CollectorPoint extends BaseEntity {
 
 	@Column()
 	picture: string
+
+	@Column()
+	categories: string
 }

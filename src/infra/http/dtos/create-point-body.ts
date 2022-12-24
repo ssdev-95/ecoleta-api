@@ -26,8 +26,11 @@ export class CreateCollectorPointBody {
 	uf: string
 
 	@IsNotEmpty()
-	coords: string
+	coords: number[]
 
 	@IsNotEmpty()
 	picture: string
+
+	@IsNotEmpty()
+	categories: string[]
 }

@@ -13,7 +13,8 @@ export function makeCollectorPoint(override:Override = {}) {
 		street: 'salame',
 		city: '2f7dhws',
 		uf: 'MA',
-		coords: 'nsu2nt8fidje',
+		coords: [-3, -59],
+		categories: ['salaminho'],
 		...override
 	}
 }

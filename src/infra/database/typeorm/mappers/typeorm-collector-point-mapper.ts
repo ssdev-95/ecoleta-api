@@ -3,6 +3,10 @@ import {
 } from '@application/entity/collector-point';
 
 import {
+	Selectors
+} from '@application/repositories/collector-points-repository';
+
+import {
 	CollectorPoint as CollectorPointEntity
 } from '../entity/point';
 
@@ -17,9 +21,10 @@ export class CollectorPointMapper {
 			street: collector.street,
 			city: collector.city,
 			uf: collector.uf,
-			coords: collector.coords,
+			coords: collector.coords.join(','),
 
-			picture: collector.picture
+			picture: collector.picture,
+			categories: collector.categories.join(',')
 		}
 	}
 
@@ -32,8 +37,18 @@ export class CollectorPointMapper {
 			street: raw.street,
 			city: raw.city,
 			uf: raw.uf,
-			coords: raw.coords,
-			picture: raw.picture
+			coords: raw.coords.split(',').map(Number),
+
+			picture: raw.picture,
+			categories: raw.categories.split(',')
 		}, raw.id)
+	}
+
+	static toSelectors(raw:CollectorPointEntity[]) {
+		return raw.reduce((acc, curr    ) => {
+			acc.city = [...acc.city, curr.city]
+			acc.uf = [...acc.uf, curr.uf]
+			return acc
+		}, { uf:[],city:[] } as Selectors)
 	}
 }

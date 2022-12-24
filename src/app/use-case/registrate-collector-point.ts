@@ -12,8 +12,9 @@ export interface RegistryCollectorProps {
 	street: string
 	city: string
 	uf: string
-	coords: string
-	picture: string
+	coords: number[]
+	picture: string,
+	categories: string[]
 }
 
 interface RegistryCollectorResponse {

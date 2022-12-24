@@ -3,7 +3,7 @@ import {
 } from '@application/entity/collector-point';
 
 import {
-	CollectorPointsRepository
+	CollectorPointsRepository, Selectors
 } from '@application/repositories/collector-points-repository';
 
 export class InMemmoryCollectorPointsRepository
@@ -29,5 +29,15 @@ export class InMemmoryCollectorPointsRepository
 		}
 
 		return collector
+	}
+
+	async getSelectors() {
+		const selectors = this.collectors.reduce((acc, curr) => {
+			acc.city = [...acc.city, curr.city]
+			acc.uf = [...acc.uf, curr.uf]
+			return acc
+		}, { uf:[],city:[] } as Selectors)
+
+		return selectors
 	}
 }

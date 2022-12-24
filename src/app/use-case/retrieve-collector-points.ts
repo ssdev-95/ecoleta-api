@@ -25,4 +25,8 @@ export class CollectorPointRetriever {
 
 		return rawResponse
 	}
+
+	async getSelectors() {
+		return await this.collectorPointsRepository.getSelectors()
+	}
 }

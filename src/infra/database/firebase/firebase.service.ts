@@ -27,16 +27,20 @@ export class FirebaseService {
 	}
 
 	async upload(collectorImage:CollectorImage) {
-		const name = `${Date.now()}-${collectorImage.name}`
-		const imageRef = ref(this.storage!, name)
+		try {
+			const name = `${Date.now()}-${collectorImage.name}`
+			const imageRef = ref(this.storage!, name)
 
-		await this.uploadWithBase64(
-			imageRef,
-			collectorImage.image,
-			collectorImage.type
-		)
+			await this.uploadWithBase64(
+				imageRef,
+				collectorImage.image,
+				collectorImage.type
+			)
 
-		return getDownloadURL(imageRef)
+			return getDownloadURL(imageRef)
+		} catch(err) {
+			throw err
+		}
 	}
 
 	uploadWithBlob(ref: StorageReference, image:Blob) {

@@ -7,8 +7,9 @@ export interface CollectorPointProps {
 	street: string
 	city: string
 	uf: string
-	coords: string
-	picture: string
+	coords: number[]
+	picture: string,
+	categories: string[]
 }
 
 export class CollectorPoint {
@@ -58,5 +59,9 @@ export class CollectorPoint {
 
 	public get picture() {
 		return this.props.picture
+	}
+
+	public get categories() {
+		return this.props.categories
 	}
 }
