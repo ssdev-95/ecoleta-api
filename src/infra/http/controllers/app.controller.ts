@@ -15,6 +15,18 @@ import {
 } from '@application/use-case/retrieve-collector-points';
 
 import {
+	UploadImageBody
+} from '../dtos/upload-image-body';
+
+import {
+	UploadImage
+} from '@application/use-case/upload-collector-image';
+
+import {
+	CollectorImage
+} from '@application/entity/collector-image';
+
+import {
 	CollectorPointMapper
 } from '@infra/database/typeorm/mappers/typeorm-collector-point-mapper';
 
@@ -22,7 +34,8 @@ import {
 export class AppController {
 	constructor(
 		private createCollectorPoint:CollectorPointRegister,
-		private retrieveCollectorPoint:CollectorPointRetriever
+		private retrieveCollectorPoint:CollectorPointRetriever,
+		private imageUploader: UploadImage
 	) { }
 
 	@Get('Hello')
@@ -35,13 +48,20 @@ export class AppController {
 			coords:[-3.1037625, -60.0241406],
 			email:'siri_cutico@ecoleta.dev',
 			whatsapp: 11994839988,
-			picture:'https://firebasestorage.googleapis.com/v0/b/ecoleta-3718e.appspot.com/o/image_1890e444-696b-40b2-9860-277e58c3b22a20221222_093946.jpg?alt=media&token=fe21cc86-6b23-4102-b78b-b6333a2b6acd',
+			picture:{
+				image:'https://firebasestorage.googleapis.com/v0/b/ecoleta-3718e.appspot.com/o/image_1890e444-696b-40b2-9860-277e58c3b22a20221222_093946.jpg?alt=media&token=fe21cc86-6b23-4102-b78b-b6333a2b6acd',
+				name: 'salaminho.png',
+				type: 'image/png'
+			},
 			categories: ['salaminho']
 		}
 
 		await this
 		  .createCollectorPoint
-			.register(seedCollector)
+			.register({
+				...seedCollector,
+				picture: seedCollector.picture.image
+			})
 
 		return 'Hello World'
 	}
@@ -73,14 +93,40 @@ export class AppController {
 
 	@Post('new')
 	async create(@Body() body:CreateCollectorPointBody) {
-		const rawResponse = await this
-		  .createCollectorPoint
-			.register(body)
+		try {
+			const { picture, ...rest } = body
+			const image = await this
+			  .uploadImage(body.picture)
 
-		return {
-			success: !!Object.values(
-				rawResponse.collectorPoint
-			).length
+			const rawResponse = await this
+			  .createCollectorPoint
+				.register({
+					...rest,
+					picture: image
+				})
+
+			return {
+				success: !!Object
+				  .values(rawResponse.collectorPoint)
+					.length
+			}
+		} catch (err) {
+			throw err
 		}
+	}
+
+
+	async uploadImage(imageOptions: UploadImageBody) {
+		const {name:imageName,image,type:imageType} = imageOptions
+		
+		const imageInstance = new CollectorImage({
+			image,
+			type: imageType,
+			name: imageName
+		})
+
+		return await this
+		  .imageUploader
+			.upload(imageInstance)
 	}
 }

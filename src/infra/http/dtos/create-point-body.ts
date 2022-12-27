@@ -4,6 +4,8 @@ import {
 	IsNumber
 } from 'class-validator';
 
+import {UploadImageBody} from './upload-image-body';
+
 export class CreateCollectorPointBody {
 	@IsNotEmpty()
 	name: string
@@ -29,7 +31,7 @@ export class CreateCollectorPointBody {
 	coords: number[]
 
 	@IsNotEmpty()
-	picture: string
+	picture: UploadImageBody
 
 	@IsNotEmpty()
 	categories: string[]

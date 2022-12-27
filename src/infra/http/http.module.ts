@@ -9,10 +9,6 @@ import {
 } from './controllers/app.controller';
 
 import {
-	UploadImageController
-} from './controllers/upload-image.controller';
-
-import {
 	CollectorPointRegister
 } from '@application/use-case/registrate-collector-point';
 
@@ -55,7 +51,7 @@ import {
 		CollectorPointRetriever,
 		UploadImage
 	],
-	controllers: [AppController, UploadImageController],
+	controllers: [AppController],
 	exports: [UploadImage]
 })
 export class HTTPModule {
