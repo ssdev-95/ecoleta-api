@@ -3,24 +3,15 @@ import {
 } from '@nestjs/common';
 
 import {
-	CreateCollectorPointBody
-} from '../dtos/create-point-body';
-
-import {
-	CollectorPointRegister
-} from '@application/use-case/registrate-collector-point';
-
-import {
-	CollectorPointRetriever
-} from '@application/use-case/retrieve-collector-points';
-
-import {
+	CreateCollectorPointBody,
 	UploadImageBody
-} from '../dtos/upload-image-body';
+} from '@infra/http/dtos';
 
 import {
+	CollectorPointRegister,
+	CollectorPointRetriever,
 	UploadImage
-} from '@application/use-case/upload-collector-image';
+} from '@application/use-case';
 
 import {
 	CollectorImage
@@ -29,6 +20,11 @@ import {
 import {
 	CollectorPointMapper
 } from '@infra/database/typeorm/mappers/typeorm-collector-point-mapper';
+
+import {
+	CollectorQueryException,
+	CollectorRegistrationException
+} from '@infra/http/exceptions';
 
 @Controller('points')
 export class AppController {
@@ -75,20 +71,34 @@ export class AppController {
 
   @Get('list/:city')
   async getManyByCity(@Param('city') city:string) {
-    const collectors = await this
-		  .retrieveCollectorPoint
-			.findManyByCity(city)
+    try {
+  		const collectors = await this
+  		  .retrieveCollectorPoint
+  			.findManyByCity(city)
 
-		return collectors.map(CollectorPointMapper.toTypeORM)
+  		return collectors
+			  .map(CollectorPointMapper.toTypeORM)
+		} catch(err) {
+			throw new CollectorQueryException(
+				err as Error
+			)
+		}
 	}
 
 	@Get(':id')
 	async getById(@Param('id') id:string) {
-		const collector = await this
-		  .retrieveCollectorPoint
-			.findById(id)
+		try {
+  		const collector = await this
+  		  .retrieveCollectorPoint
+  			.findById(id)
 
-		return CollectorPointMapper.toTypeORM(collector)
+  		return CollectorPointMapper
+			  .toTypeORM(collector)
+		} catch(err) {
+   		throw new CollectorQueryException(
+				err as Error
+			)
+		}
 	}
 
 	@Post('new')
@@ -111,22 +121,30 @@ export class AppController {
 					.length
 			}
 		} catch (err) {
-			throw err
+			throw new CollectorRegistrationException(
+				err as Error
+			)
 		}
 	}
 
 
 	async uploadImage(imageOptions: UploadImageBody) {
-		const {name:imageName,image,type:imageType} = imageOptions
+		try {
+			const {
+				name:imageName,image,type:imageType
+			} = imageOptions
 		
-		const imageInstance = new CollectorImage({
-			image,
-			type: imageType,
-			name: imageName
-		})
+			const imageInstance = new CollectorImage({
+				image,
+				type: imageType,
+				name: imageName
+			})
 
-		return await this
-		  .imageUploader
-			.upload(imageInstance)
+			return await this
+  		  .imageUploader
+				.upload(imageInstance)
+		} catch (err) {
+			throw err
+		}
 	}
 }
