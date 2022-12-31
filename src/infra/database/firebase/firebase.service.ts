@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { initializeApp } from 'firebase/app';
-import { firebaseConfig } from './config';
+
+import {
+	FirebaseApp, initializeApp
+} from 'firebase/app';
 
 import {
 	ref,
-	StorageReference,
+	StorageReference as Ref,
 	getStorage,
 	uploadString,
 	uploadBytes,
@@ -17,41 +19,46 @@ import {
 	CollectorImage
 } from '@application/entity/collector-image';
 
+import { firebaseConfig } from './config';
+
 @Injectable()
 export class FirebaseService {
+	private firebase:FirebaseApp|undefined
 	private storage:FirebaseStorage|undefined
 
 	constructor() {
-		initializeApp(firebaseConfig)
-		this.storage = getStorage()
+		this.firebase = initializeApp(firebaseConfig)
+		this.storage = getStorage(this.firebase!)
+		console.info('[FIREBASE] ',  firebaseConfig)
+		console.info('[FIREBASE] Storage initialized')
 	}
 
 	async upload(collectorImage:CollectorImage) {
 		try {
 			const name = `${Date.now()}-${collectorImage.name}`
-			const imageRef = ref(this.storage!, name)
 
-			await this.uploadWithBase64(
-				imageRef,
-				collectorImage.image,
-				collectorImage.type
-			)
+			const { ref: imageRef } = await this
+			  .uploadWithString(
+  			  ref(this.storage!, name),
+  				collectorImage.image,
+  				collectorImage.type
+  			)
 
+			console.log(imageRef)
 			return getDownloadURL(imageRef)
 		} catch(err) {
+			console.log(err)
 			throw err
 		}
 	}
 
-	uploadWithBlob(ref: StorageReference, image:Blob) {
+	uploadWithBlob(ref: Ref, image:Blob) {
 		return uploadBytes(ref,image)
 	}
 
-	uploadWithBase64(
-		ref:StorageReference,
-		image:string,
-		type: string
-	) {
-		return uploadString(ref, image, type as StringFormat)
+	uploadWithString(ref:Ref, image:string, type:string) {
+		return uploadString(
+			ref, image, type as StringFormat
+		)
 	}
 }

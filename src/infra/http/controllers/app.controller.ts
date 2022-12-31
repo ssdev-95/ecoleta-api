@@ -79,6 +79,7 @@ export class AppController {
   		return collectors
 			  .map(CollectorPointMapper.toTypeORM)
 		} catch(err) {
+			console.log(err)
 			throw new CollectorQueryException(
 				err as Error
 			)
@@ -95,7 +96,8 @@ export class AppController {
   		return CollectorPointMapper
 			  .toTypeORM(collector)
 		} catch(err) {
-   		throw new CollectorQueryException(
+   		console.log(err)
+			throw new CollectorQueryException(
 				err as Error
 			)
 		}
@@ -121,6 +123,7 @@ export class AppController {
 					.length
 			}
 		} catch (err) {
+			console.log(err)
 			throw new CollectorRegistrationException(
 				err as Error
 			)
