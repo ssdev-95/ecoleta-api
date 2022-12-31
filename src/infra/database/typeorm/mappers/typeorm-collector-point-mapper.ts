@@ -45,10 +45,15 @@ export class CollectorPointMapper {
 	}
 
 	static toSelectors(raw:CollectorPointEntity[]) {
-		return raw.reduce((acc, curr    ) => {
+		const { uf, city } = raw.reduce((acc, curr) => {
 			acc.city = [...acc.city, curr.city]
 			acc.uf = [...acc.uf, curr.uf]
 			return acc
 		}, { uf:[],city:[] } as Selectors)
+
+		return {
+			uf: [...(new Set(uf))],
+			city: [...(new Set(city))]
+		}
 	}
 }

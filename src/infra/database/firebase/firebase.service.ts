@@ -28,8 +28,7 @@ export class FirebaseService {
 
 	constructor() {
 		this.firebase = initializeApp(firebaseConfig)
-		this.storage = getStorage(this.firebase!)
-		console.info('[FIREBASE] ',  firebaseConfig)
+		this.storage = getStorage(this.firebase)
 		console.info('[FIREBASE] Storage initialized')
 	}
 
@@ -43,9 +42,10 @@ export class FirebaseService {
   				collectorImage.image,
   				collectorImage.type
   			)
+			const url = await getDownloadURL(imageRef)
+			console.log(url)
 
-			console.log(imageRef)
-			return getDownloadURL(imageRef)
+			return url
 		} catch(err) {
 			console.log(err)
 			throw err
