@@ -21,20 +21,8 @@ import {
 } from '../database/typeorm/repository/typeorm-collector-points-repository';
 
 import {
-	FirebaseCollectorImageRepository
-} from '../database/firebase/repositories/firebase-collector-image-repository';
-
-import {
 	CollectorPointRetriever
 } from '@application/use-case/retrieve-collector-points';
-
-import {
-	UploadImage
-} from '@application/use-case/upload-collector-image';
-
-import {
-	CollectorImageRespository
-} from '@application/repositories/collector-image-repository';
 
 @Module({
 	imports: [DatabaseModule],
@@ -43,16 +31,10 @@ import {
 			provide:  CollectorPointsRepository,
 			useClass: TypeormCollectorPointsRepository
 		},
-		{
-			provide: CollectorImageRespository,
-			useClass: FirebaseCollectorImageRepository
-		},
 		CollectorPointRegister,
-		CollectorPointRetriever,
-		UploadImage
+		CollectorPointRetriever
 	],
-	controllers: [AppController],
-	exports: [UploadImage]
+	controllers: [AppController]
 })
 export class HTTPModule {
 }
