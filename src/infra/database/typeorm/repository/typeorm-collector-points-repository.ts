@@ -50,4 +50,13 @@ export class TypeormCollectorPointsRepository implements CollectorPointsReposito
 
 		return collector
 	}
+
+	async getSelectors() {
+		const rawResponse = await this
+		  .repositoryService
+			.find()
+
+		return CollectorPointMapper
+		  .toSelectors(rawResponse)
+	}
 }

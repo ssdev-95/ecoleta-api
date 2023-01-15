@@ -6,22 +6,27 @@ import {
 } from '../entity/point';
 
 import {
-	bootstrapPointsTable1671149742441 as Migration
+	bootstrapPointsTable1671149742441 as Migration0
 } from '../migration/1671149742441-bootstrap-points-table';
+
+import {
+	alterPointsTableFields1671891171936 as Migration1
+} from '../migration/1671891171936-alter-points-table-fields';
 
 const baseConfig = {
 	synchronize: false,
 	logging: false,
 	migrationsRun: false,
 	entities: [CollectorPoint],
-	migrations: [Migration],
+	migrations: [Migration0, Migration1],
 	subscribers: []
 }
 
 export const prodConfig:DataSourceOptions = {
-	type: 'mysql',
-	host: process.env.DB_HOST,
-	port: parseInt(process.env.DB_PORT ?? '3306'),
+	type: 'postgres',
+	//host: process.env.DB_HOST,
+	url: process.env.DB_URL,
+	//port: parseInt(process.env.DB_PORT ?? '3306'),
 	username: process.env.DB_USERNAME,
 	password: process.env.DB_PASSWORD,
 	database: process.env.DB_NAME,
