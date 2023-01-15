@@ -33,7 +33,7 @@
 ## How to run locally
 
 * Clone this repo
-* Setup environment variables according to examples provided in environment folder/.env.example file.
+* Setup environment variables according to examples provided in a .env.example file.
 *  Install necessary dependecies by entering project folder and running ` yarn `
 * Run ` yarn dev `(web) or ` yarn start:dev `(api).
 > On web app open the app using the port that appears on the terminal.
